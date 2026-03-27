@@ -119,13 +119,16 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
   }, []);
 
   const updateContent = async (newContent: SiteContent) => {
+    console.log("Tentando salvar conteúdo no Firestore...", newContent);
     try {
       const contentDoc = doc(db, 'content', 'main');
       await setDoc(contentDoc, {
         ...newContent,
         updatedAt: new Date().toISOString()
       });
+      console.log("Conteúdo salvo com sucesso no Firestore!");
     } catch (error) {
+      console.error("Erro detalhado ao salvar no Firestore:", error);
       handleFirestoreError(error, OperationType.WRITE, 'content/main');
     }
   };
