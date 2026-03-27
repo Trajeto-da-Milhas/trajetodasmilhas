@@ -40,10 +40,8 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
         setContent(data);
       } else {
         console.log("Nenhum dado encontrado no Firestore, usando padrão.");
-        // Inicializar o banco se estiver vazio e for no modo dev
-        if (window.location.pathname.includes('/dev')) {
-           setDoc(contentDoc, defaultContent).catch(err => console.error("Erro ao inicializar Firestore:", err));
-        }
+        // Inicializar o banco se estiver vazio
+        setDoc(contentDoc, defaultContent).catch(err => console.error("Erro ao inicializar Firestore:", err));
       }
     }, (error) => {
       console.error("Erro crítico no Firestore (onSnapshot):", error);
