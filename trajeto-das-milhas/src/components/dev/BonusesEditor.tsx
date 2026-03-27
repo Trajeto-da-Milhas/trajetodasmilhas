@@ -4,6 +4,7 @@ import InputField from './InputField';
 import TextAreaField from './TextAreaField';
 import EditorSection from './EditorSection';
 import ListItemEditor from './ListItemEditor';
+import ImageUpload from './ImageUpload';
 import { Image } from 'lucide-react';
 
 const BonusesEditor: React.FC = () => {
@@ -50,21 +51,27 @@ const BonusesEditor: React.FC = () => {
                 onChange={(val) => handleItemChange(item.id, 'title', val)}
                 placeholder="Ex: Aula de Acúmulo Estratégico"
               />
-              <InputField 
-                label="URL da Imagem" 
-                value={item.imageUrl} 
-                onChange={(val) => handleItemChange(item.id, 'imageUrl', val)}
-                placeholder="https://images.unsplash.com/..."
-                icon={<Image size={14} />}
-                preview={
-                  <img 
-                    src={item.imageUrl} 
-                    className="w-full h-full object-cover" 
-                    alt="Bônus"
-                    referrerPolicy="no-referrer"
-                  />
-                }
-              />
+              <div className="space-y-4">
+                <InputField 
+                  label="URL da Imagem" 
+                  value={item.imageUrl} 
+                  onChange={(val) => handleItemChange(item.id, 'imageUrl', val)}
+                  placeholder="https://images.unsplash.com/..."
+                  icon={<Image size={14} />}
+                  preview={
+                    <img 
+                      src={item.imageUrl} 
+                      className="w-full h-full object-cover" 
+                      alt="Bônus"
+                      referrerPolicy="no-referrer"
+                    />
+                  }
+                />
+                <ImageUpload 
+                  label="Fazer Upload da Imagem" 
+                  onUploadSuccess={(url) => handleItemChange(item.id, 'imageUrl', url)} 
+                />
+              </div>
             </div>
             <TextAreaField 
               label="Descrição do Bônus" 

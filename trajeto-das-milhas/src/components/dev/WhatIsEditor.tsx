@@ -3,6 +3,7 @@ import { useContent } from '../../context/ContentContext';
 import InputField from './InputField';
 import TextAreaField from './TextAreaField';
 import EditorSection from './EditorSection';
+import ImageUpload from './ImageUpload';
 import { Image } from 'lucide-react';
 
 const WhatIsEditor: React.FC = () => {
@@ -36,21 +37,29 @@ const WhatIsEditor: React.FC = () => {
         rows={6}
       />
 
-      <InputField 
-        label="URL da Imagem de Destaque" 
-        value={whatis.imageUrl} 
-        onChange={(val) => handleChange('imageUrl', val)}
-        placeholder="https://images.unsplash.com/..."
-        icon={<Image size={14} />}
-        preview={
-          <img 
-            src={whatis.imageUrl} 
-            className="w-full h-full object-cover" 
-            alt="Preview"
-            referrerPolicy="no-referrer"
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-end">
+        <InputField 
+          label="URL da Imagem de Destaque" 
+          value={whatis.imageUrl} 
+          onChange={(val) => handleChange('imageUrl', val)}
+          placeholder="https://images.unsplash.com/..."
+          icon={<Image size={14} />}
+          preview={
+            <img 
+              src={whatis.imageUrl} 
+              className="w-full h-full object-cover" 
+              alt="Preview"
+              referrerPolicy="no-referrer"
+            />
+          }
+        />
+        <div className="pb-1">
+          <ImageUpload 
+            label="Fazer Upload da Imagem" 
+            onUploadSuccess={(url) => handleChange('imageUrl', url)} 
           />
-        }
-      />
+        </div>
+      </div>
     </EditorSection>
   );
 };
