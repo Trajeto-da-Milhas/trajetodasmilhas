@@ -129,6 +129,12 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
       console.log("Conteúdo salvo com sucesso no Firestore!");
     } catch (error) {
       console.error("Erro detalhado ao salvar no Firestore:", error);
+      if (error instanceof Error) {
+        console.error("Mensagem de erro:", error.message);
+        console.error("Stack trace:", error.stack);
+        // Exibir alerta detalhado no navegador para o usuário
+        alert(`Erro ao salvar no Firebase: ${error.message}\n\nVerifique o console para mais detalhes.`);
+      }
       handleFirestoreError(error, OperationType.WRITE, 'content/main');
     }
   };
