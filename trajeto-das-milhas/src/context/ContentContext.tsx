@@ -95,17 +95,24 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
   // Listen for Content changes from Firestore
   useEffect(() => {
+    console.log("Iniciando monitoramento do Firestore...");
     const contentDoc = doc(db, 'content', 'main');
     const unsubscribe = onSnapshot(contentDoc, (snapshot) => {
       if (snapshot.exists()) {
-        setContent(snapshot.data() as SiteContent);
+        const data = snapshot.data() as SiteContent;
+        console.log("Dados recebidos do Firestore:", data);
+        setContent(data);
       } else {
-        // Initialize with default content if it doesn't exist
-        // Only if we are an admin, but for now we'll just let the admin save it
-        console.log("No content found in Firestore, using default.");
+        console.log("Nenhum dado encontrado no Firestore, usando padrão.");
+        // Se estiver no modo dev e não houver dados, vamos salvar o padrão no Firestore
+        if (window.location.pathname.includes('/dev')) {
+           setDoc(contentDoc, defaultContent).catch(err => console.error("Erro ao inicializar Firestore:", err));
+        }
       }
     }, (error) => {
-      handleFirestoreError(error, OperationType.GET, 'content/main');
+      console.error("Erro no onSnapshot:", error);
+      // Não travar o site se houver erro de permissão, apenas logar
+      // handleFirestoreError(error, OperationType.GET, 'content/main');
     });
 
     return () => unsubscribe();
