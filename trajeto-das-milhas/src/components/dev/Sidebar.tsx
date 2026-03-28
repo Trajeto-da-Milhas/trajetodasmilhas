@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
+import { useNavigate } from 'react-router-dom';
 import { 
   Layout, 
   Info, 
@@ -9,7 +10,8 @@ import {
   HelpCircle, 
   User, 
   ShieldCheck,
-  ChevronRight
+  ChevronRight,
+  Video
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -18,6 +20,7 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => {
+  const navigate = useNavigate();
   const tabs = [
     { id: 'hero', label: 'Hero', icon: Layout },
     { id: 'whatis', label: 'O que é', icon: Info },
@@ -69,14 +72,31 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => {
         </div>
       </div>
 
-      <div className="mt-auto p-4 rounded-xl bg-gradient-to-br from-[#0D1526] to-[#050A14] border border-white/5">
-        <div className="flex items-center gap-3 mb-2">
-          <div className="w-2 h-2 rounded-full bg-[#00FF94] animate-pulse shadow-[0_0_10px_#00FF94]" />
-          <span className="text-[10px] font-mono text-[#00FF94] uppercase tracking-widest">SISTEMA ONLINE</span>
+      <div className="mt-auto space-y-4">
+        {/* VSL Studio Button */}
+        <button
+          onClick={() => navigate('/#/dev/vsl-studio')}
+          className="w-full flex items-center justify-between px-4 py-3 rounded-xl bg-gradient-to-r from-[#00D4FF]/20 to-[#7B2FFF]/20 border border-[#00D4FF]/30 hover:border-[#00D4FF]/60 text-[#00D4FF] transition-all duration-300 group"
+        >
+          <div className="flex items-center gap-3">
+            <div className="p-2 rounded-lg bg-[#00D4FF]/20 group-hover:bg-[#00D4FF]/30 transition-colors">
+              <Video size={18} />
+            </div>
+            <span className="text-sm font-bold uppercase tracking-wider">VSL Studio</span>
+          </div>
+          <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
+        </button>
+
+        {/* Status Box */}
+        <div className="p-4 rounded-xl bg-gradient-to-br from-[#0D1526] to-[#050A14] border border-white/5">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="w-2 h-2 rounded-full bg-[#00FF94] animate-pulse shadow-[0_0_10px_#00FF94]" />
+            <span className="text-[10px] font-mono text-[#00FF94] uppercase tracking-widest">SISTEMA ONLINE</span>
+          </div>
+          <p className="text-[10px] text-[#8BA3C0] leading-relaxed">
+            As alterações são refletidas em tempo real no estado global do aplicativo.
+          </p>
         </div>
-        <p className="text-[10px] text-[#8BA3C0] leading-relaxed">
-          As alterações são refletidas em tempo real no estado global do aplicativo.
-        </p>
       </div>
     </aside>
   );
