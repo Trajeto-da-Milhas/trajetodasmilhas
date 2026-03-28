@@ -88,11 +88,11 @@ const Hero: React.FC = () => {
             <div className="flex flex-col md:flex-row items-center justify-center gap-6">
               <a 
                 href={content.hero.ctaLink}
-                className="w-full md:w-auto px-8 md:px-10 py-4 bg-[#00D4FF] text-[#050A14] rounded-full font-black text-lg hover:shadow-[0_0_30px_rgba(0,212,255,0.6)] transition-all transform hover:scale-105 text-center flex items-center justify-center gap-3"
+                className="w-full md:w-auto px-6 md:px-10 py-4 bg-[#00D4FF] text-[#050A14] rounded-full font-black text-sm sm:text-base md:text-lg hover:shadow-[0_0_30px_rgba(0,212,255,0.6)] transition-all transform hover:scale-105 text-center flex items-center justify-center gap-2 md:gap-3 whitespace-nowrap"
               >
-                <Zap className="w-6 h-6 flex-shrink-0" />
-                <span className="flex flex-col md:block text-left md:text-center leading-tight md:leading-normal">
-                  <span className="md:hidden">Entrar no<br />Grupo VIP</span>
+                <Zap className="w-5 h-5 md:w-6 md:h-6 flex-shrink-0" />
+                <span>
+                  <span className="md:hidden">Entrar no Grupo VIP</span>
                   <span className="hidden md:inline">{content.hero.ctaText}</span>
                 </span>
               </a>

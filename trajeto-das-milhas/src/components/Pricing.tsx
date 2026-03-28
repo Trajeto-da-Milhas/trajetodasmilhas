@@ -57,17 +57,14 @@ const Pricing: React.FC = () => {
 
               <a 
                 href={plan.checkoutLink}
-                className={`w-full py-4 md:py-5 rounded-2xl font-black text-lg md:text-xl text-center flex items-center justify-center gap-4 transition-all ${
+                className={`w-full py-4 md:py-5 rounded-2xl font-black text-sm sm:text-base md:text-xl text-center flex items-center justify-center gap-2 md:gap-3 transition-all whitespace-nowrap ${
                   plan.highlighted 
                   ? 'bg-[#00D4FF] text-[#050A14] hover:shadow-[0_0_30px_rgba(0,212,255,0.5)]' 
                   : 'bg-white/5 text-white hover:bg-white/10'
                 }`}
               >
-                <Zap className="w-6 h-6 flex-shrink-0" />
-                <span className="flex flex-col md:block text-left md:text-center leading-tight md:leading-normal">
-                  <span className="md:hidden">Quero Garantir<br />Minha Vaga</span>
-                  <span className="hidden md:inline">Quero Garantir Minha Vaga</span>
-                </span>
+                <Zap className="w-5 h-5 md:w-6 md:h-6 flex-shrink-0" />
+                <span>Quero Garantir Minha Vaga</span>
               </a>
             </motion.div>
           ))}
