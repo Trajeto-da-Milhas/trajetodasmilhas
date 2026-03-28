@@ -43,7 +43,7 @@ const Hero: React.FC = () => {
         </div>
       </div>
 
-      <section className="relative flex flex-col items-center pt-[50px] pb-12 overflow-hidden">
+      <section className="relative flex flex-col items-center pt-[50px] pb-0 overflow-hidden">
         {/* Dot Grid Background */}
         <div className="absolute inset-0 z-0 opacity-20" 
              style={{ backgroundImage: 'radial-gradient(circle, #00D4FF 1px, transparent 1px)', backgroundSize: '30px 30px' }}>
@@ -61,7 +61,7 @@ const Hero: React.FC = () => {
                 {content.hero.title}
               </span>
             </h1>
-            <p className="text-[#8BA3C0] text-lg md:text-xl max-w-2xl mx-auto mb-10">
+            <p className="text-[#8BA3C0] text-xl md:text-2xl max-w-4xl mx-auto mb-10 leading-relaxed">
               {content.hero.subtitle}
             </p>
             
@@ -83,7 +83,7 @@ const Hero: React.FC = () => {
               ></iframe>
             </motion.div>
 
-            <div className="flex flex-col md:flex-row items-center justify-center gap-6 mb-8">
+            <div className="flex flex-col md:flex-row items-center justify-center gap-6 mb-0">
               <a 
                 href={content.hero.ctaLink}
                 className="px-10 py-4 bg-[#00D4FF] text-[#050A14] rounded-full font-black text-lg hover:shadow-[0_0_30px_rgba(0,212,255,0.6)] transition-all transform hover:scale-105"
