@@ -29,11 +29,11 @@ const Hero: React.FC = () => {
           <div className="marquee-content flex">
             {[...Array(16)].map((_, i) => (
               <div key={i} className="flex items-center">
-                <span className="text-[#00D4FF] font-bold text-sm md:text-base tracking-widest px-4">
+                <span className="text-[#00D4FF] font-bold text-sm md:text-base tracking-widest mx-4">
                   Vagas Limitadas!
                 </span>
                 <span className="text-[#00D4FF]">•</span>
-                <span className="text-[#00D4FF] font-bold text-sm md:text-base tracking-widest px-4">
+                <span className="text-[#00D4FF] font-bold text-sm md:text-base tracking-widest mx-4">
                   Garanta Já Seu Acesso!
                 </span>
                 <span className="text-[#00D4FF]">•</span>
