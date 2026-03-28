@@ -40,7 +40,7 @@ const LandingPage: React.FC = () => {
   }
 
   return (
-    <main className="bg-[#050A14] text-[#E8F4FD] min-h-screen font-sans selection:bg-[#00D4FF] selection:text-[#050A14] overflow-x-hidden">
+    <main className="bg-[#050A14] text-[#E8F4FD] min-h-screen font-sans selection:bg-[#00D4FF] selection:text-[#050A14]">
       <Hero />
       <WhatIs />
       <Benefits />
