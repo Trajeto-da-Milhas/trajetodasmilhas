@@ -109,13 +109,12 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ src, title = 'Video' }) => {
       <video
         ref={videoRef}
         src={src}
-        title={title}
         className={`w-full h-full object-cover transition-all duration-300 ${
           isBlurred ? 'blur-lg' : ''
         }`}
         onPlay={handleVideoPlay}
         onPause={handleVideoPause}
-        loop={hasStartedByUser} // Loop apenas após o usuário clicar
+        loop={hasStartedByUser}
         playsInline
         muted={isMuted}
         autoPlay
