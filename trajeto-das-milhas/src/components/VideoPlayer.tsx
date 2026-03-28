@@ -162,21 +162,21 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ src, title = 'Video' }) => {
       {isBlurred && (
         <div className="absolute inset-0 flex items-center justify-center z-10 bg-black/30">
           <div className="relative flex items-center justify-center">
-            {/* Círculos de Pulso Estilo Ripple (CodePen) */}
+            {/* Círculos de Pulso Estilo Ripple (CodePen) - Corrigido Fade Out */}
             {[0, 1, 2].map((index) => (
               <motion.div
                 key={index}
                 className="absolute rounded-full border border-[#00D4FF] bg-[#00D4FF]/20"
-                initial={{ width: 96, height: 96, opacity: 0.5, scale: 1 }}
+                initial={{ width: 96, height: 96, opacity: 0, scale: 1 }}
                 animate={{
-                  scale: [1, 2.5],
-                  opacity: [0.5, 0],
+                  scale: [1, 3],
+                  opacity: [0, 0.5, 0],
                 }}
                 transition={{
-                  duration: 2,
+                  duration: 2.5,
                   repeat: Infinity,
-                  delay: index * 0.6,
-                  ease: "linear",
+                  delay: index * 0.8,
+                  ease: "easeOut",
                 }}
               />
             ))}
