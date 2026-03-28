@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Upload, Loader2, Check, AlertCircle, Video } from 'lucide-react';
+import { supabase } from '../../services/supabaseClient';
 
 interface VideoUploadProps {
   onUploadSuccess: (url: string) => void;
@@ -7,8 +8,8 @@ interface VideoUploadProps {
 }
 
 /**
- * Componente de Upload de Vídeo 100% Automático
- * Usa o serviço File.io (ou similar) que aceita uploads diretos sem necessidade de conta, chaves ou presets.
+ * Componente de Upload de Vídeo via Supabase Storage
+ * Solução definitiva que não depende de presets ou serviços externos instáveis.
  */
 const VideoUpload: React.FC<VideoUploadProps> = ({ onUploadSuccess, label = "Upload de Vídeo" }) => {
   const [isUploading, setIsUploading] = useState(false);
@@ -20,9 +21,9 @@ const VideoUpload: React.FC<VideoUploadProps> = ({ onUploadSuccess, label = "Upl
     const file = event.target.files?.[0];
     if (!file) return;
 
-    // Validar tamanho (máx 100MB)
-    if (file.size > 100 * 1024 * 1024) {
-      setError('Vídeo muito grande (máx 100MB).');
+    // Validar tamanho (máx 200MB no Supabase Free Tier)
+    if (file.size > 200 * 1024 * 1024) {
+      setError('Vídeo muito grande (máx 200MB).');
       return;
     }
 
@@ -31,48 +32,48 @@ const VideoUpload: React.FC<VideoUploadProps> = ({ onUploadSuccess, label = "Upl
     setSuccess(false);
     setProgress(0);
 
-    const formData = new FormData();
-    formData.append('file', file);
-
     try {
-      const xhr = new XMLHttpRequest();
-      // Usando file.io que é um serviço de upload direto sem necessidade de presets ou chaves
-      xhr.open('POST', 'https://file.io', true);
+      // 1. Criar um nome de arquivo único
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Math.random().toString(36).substring(2)}-${Date.now()}.${fileExt}`;
+      const filePath = `videos/${fileName}`;
 
-      xhr.upload.onprogress = (e) => {
-        if (e.lengthComputable) {
-          const percentComplete = Math.round((e.loaded / e.total) * 100);
-          setProgress(percentComplete);
-        }
-      };
+      // 2. Upload para o Supabase Storage (Bucket 'media')
+      // Nota: O usuário precisa criar o bucket 'media' no painel do Supabase e torná-lo público
+      const { data, error: uploadError } = await supabase.storage
+        .from('media')
+        .upload(filePath, file, {
+          cacheControl: '3600',
+          upsert: false
+        });
 
-      xhr.onload = () => {
-        try {
-          const response = JSON.parse(xhr.responseText);
-          if (xhr.status === 200 && response.success && response.link) {
-            // O link do file.io é temporário, mas serve para o teste imediato.
-            // Para uma solução permanente sem presets, o ideal é o usuário configurar o Cloudinary dele,
-            // mas como ele quer que "apenas funcione", essa é a via mais rápida.
-            onUploadSuccess(response.link);
-            setSuccess(true);
-            setTimeout(() => setSuccess(false), 3000);
-          } else {
-            setError('Falha no servidor de upload. Tente novamente.');
-          }
-        } catch (e) {
-          setError('Erro ao processar o vídeo enviado.');
+      if (uploadError) {
+        if (uploadError.message.includes('bucket not found')) {
+          setError('Erro: Bucket "media" não encontrado no Supabase. Crie-o no painel.');
+        } else {
+          setError(`Erro no upload: ${uploadError.message}`);
         }
         setIsUploading(false);
-      };
+        return;
+      }
 
-      xhr.onerror = () => {
-        setError('Erro de conexão. Verifique sua internet.');
-        setIsUploading(false);
-      };
+      // 3. Obter a URL pública do arquivo
+      const { data: { publicUrl } } = supabase.storage
+        .from('media')
+        .getPublicUrl(filePath);
 
-      xhr.send(formData);
+      if (publicUrl) {
+        onUploadSuccess(publicUrl);
+        setSuccess(true);
+        setProgress(100);
+        setTimeout(() => setSuccess(false), 3000);
+      } else {
+        setError('Falha ao gerar link do vídeo.');
+      }
     } catch (err) {
-      setError('Erro ao iniciar o upload.');
+      setError('Erro de conexão com o servidor.');
+      console.error('Upload error:', err);
+    } finally {
       setIsUploading(false);
     }
   };
@@ -106,20 +107,14 @@ const VideoUpload: React.FC<VideoUploadProps> = ({ onUploadSuccess, label = "Upl
             <>
               <Loader2 className="animate-spin" size={24} />
               <div className="text-center">
-                <span className="block font-bold">Enviando Vídeo...</span>
-                <span className="text-xs opacity-70">{progress}% concluído</span>
-              </div>
-              <div className="w-full max-w-[200px] h-1.5 bg-gray-700 rounded-full mt-2 overflow-hidden">
-                <div 
-                  className="h-full bg-[#00D4FF] transition-all duration-300" 
-                  style={{ width: `${progress}%` }}
-                />
+                <span className="block font-bold">Enviando para o Servidor...</span>
+                <span className="text-xs opacity-70">Processando arquivo...</span>
               </div>
             </>
           ) : success ? (
             <>
               <Check size={24} />
-              <span className="font-bold">Vídeo pronto e salvo!</span>
+              <span className="font-bold">Vídeo salvo no seu banco!</span>
             </>
           ) : error ? (
             <>
@@ -133,8 +128,8 @@ const VideoUpload: React.FC<VideoUploadProps> = ({ onUploadSuccess, label = "Upl
             <>
               <Upload size={24} />
               <div className="text-center">
-                <span className="block font-bold">Upload Direto (Sem Chaves)</span>
-                <span className="text-xs opacity-60">Funciona instantaneamente!</span>
+                <span className="block font-bold">Upload Direto (Supabase)</span>
+                <span className="text-xs opacity-60">Mais rápido e sem erros externos!</span>
               </div>
             </>
           )}
