@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { Zap } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
+import VideoPlayer from './VideoPlayer';
 
 const Hero: React.FC = () => {
   const { content } = useContent();
@@ -67,22 +68,14 @@ const Hero: React.FC = () => {
               {content.hero.subtitle}
             </p>
             
-            {/* Video Embed */}
+            {/* Video Player */}
             <motion.div 
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.3, duration: 0.8 }}
-              className="max-w-4xl mx-auto aspect-video rounded-2xl overflow-hidden border-2 border-[#00D4FF]/20 shadow-[0_0_50px_rgba(0,212,255,0.15)] mb-12"
+              className="max-w-4xl mx-auto mb-12"
             >
-              <iframe 
-                width="100%" 
-                height="100%" 
-                src={content.hero.videoUrl} 
-                title="Trajeto das Milhas Video"
-                frameBorder="0" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowFullScreen
-              ></iframe>
+              <VideoPlayer src={content.hero.videoUrl} title="Trajeto das Milhas Video" />
             </motion.div>
 
             <div className="flex flex-col md:flex-row items-center justify-center gap-6">
