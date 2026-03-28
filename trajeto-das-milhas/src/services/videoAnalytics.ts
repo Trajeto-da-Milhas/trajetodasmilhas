@@ -86,7 +86,7 @@ export const trackVideoRetention = async (
     await trackRetentionEvent({
       video_url: videoUrl,
       user_session_id: getSessionId(),
-      current_time: currentTime,
+      video_current_time: currentTime,
       total_duration: totalDuration,
     });
   }

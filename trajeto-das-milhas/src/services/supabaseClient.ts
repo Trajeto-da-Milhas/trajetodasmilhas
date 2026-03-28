@@ -24,7 +24,7 @@ export interface VideoEvent {
 export interface RetentionEvent {
   video_url: string;
   user_session_id: string;
-  current_time: number;
+  video_current_time: number;
   total_duration: number;
   device_type?: string;
 }
@@ -101,7 +101,7 @@ export const trackRetentionEvent = async (event: RetentionEvent) => {
         {
           video_url: event.video_url,
           user_session_id: event.user_session_id || getSessionId(),
-          current_time: event.current_time,
+          video_current_time: event.video_current_time,
           total_duration: event.total_duration,
           device_type: event.device_type || getDeviceType(),
           created_at: new Date().toISOString(),
