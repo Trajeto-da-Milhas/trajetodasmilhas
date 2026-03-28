@@ -23,7 +23,6 @@ const HeroEditor: React.FC = () => {
       
       getVideoMetrics(hero.videoUrl)
         .then((data) => {
-          // Apenas o que vier do banco de dados real
           setMetrics(data);
           setIsLoadingMetrics(false);
         })
@@ -89,9 +88,9 @@ const HeroEditor: React.FC = () => {
         placeholder="Uma breve descrição persuasiva"
       />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {/* Coluna da Esquerda: URL e Upload Direto */}
-        <div className="space-y-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+        {/* Coluna da Esquerda: URL e Upload Direto ocupando o espaço vazio */}
+        <div className="flex flex-col gap-6">
           <InputField 
             label="URL do Vídeo (YouTube Embed ou Link Direto)" 
             value={hero.videoUrl} 
@@ -113,7 +112,8 @@ const HeroEditor: React.FC = () => {
             }
           />
           
-          <div className="pt-2">
+          {/* O VideoUpload agora está explicitamente dentro da mesma coluna da URL */}
+          <div className="w-full">
             <VideoUpload 
               onUploadSuccess={(url) => handleChange('videoUrl', url)} 
               label="Fazer Upload de Vídeo Direto" 
@@ -122,7 +122,7 @@ const HeroEditor: React.FC = () => {
         </div>
         
         {/* Coluna da Direita: Link CTA e Métricas */}
-        <div className="space-y-6">
+        <div className="flex flex-col gap-6">
           <InputField 
             label="Link do Botão (CTA)" 
             value={hero.ctaLink} 
@@ -131,7 +131,7 @@ const HeroEditor: React.FC = () => {
             icon={<Link size={14} />}
           />
 
-          {/* Video Metrics Section - 100% REAL FROM SUPABASE */}
+          {/* Video Metrics Section */}
           <div className="p-6 bg-[#0A1221] border border-[#00D4FF]/20 rounded-2xl">
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-2 text-[#00D4FF] font-black text-xs uppercase tracking-widest">
