@@ -85,7 +85,7 @@ const AdminPanel: React.FC = () => {
           </div>
 
           {/* Conteúdo Principal Rolável */}
-          <main className="flex-1 overflow-y-auto bg-[#050A14]/50 backdrop-blur-sm ml-56">
+          <main className="flex-1 overflow-y-auto bg-[#050A14]/50 backdrop-blur-sm ml-72">
             <div className="max-w-5xl mx-auto p-12">
               <AnimatePresence mode="wait">
                 <motion.div

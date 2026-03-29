@@ -34,7 +34,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => {
   ];
 
   return (
-    <aside className="w-56 bg-[#0D1526]/50 border-r border-white/5 p-6 flex flex-col gap-4 backdrop-blur-md">
+    <aside className="w-72 bg-[#0D1526]/50 border-r border-white/5 p-6 flex flex-col gap-4 backdrop-blur-md">
       <div className="mb-8">
         <h2 className="text-[10px] font-mono text-[#8BA3C0] uppercase tracking-[0.3em] mb-4 opacity-50">SEÇÕES DO SITE</h2>
         <div className="space-y-2">
