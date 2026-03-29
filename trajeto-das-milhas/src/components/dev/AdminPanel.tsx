@@ -78,14 +78,14 @@ const AdminPanel: React.FC = () => {
         </div>
 
         {/* Container Principal */}
-        <div className="flex flex-1 pt-20 overflow-hidden relative z-10">
-          {/* Sidebar Fixa sem sobras */}
-          <div className="w-72 h-[calc(100vh-80px)] overflow-hidden">
+        <div className="flex flex-1 overflow-hidden relative z-10">
+          {/* Sidebar Fixa - Ocupa toda a altura e não tem sobra superior */}
+          <div className="w-72 h-full">
             <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
           </div>
 
-          {/* Conteúdo Principal Rolável */}
-          <main className="flex-1 h-[calc(100vh-80px)] overflow-y-auto bg-[#050A14]/50 backdrop-blur-sm">
+          {/* Conteúdo Principal Rolável - Tem padding superior para compensar o header fixo */}
+          <main className="flex-1 h-full overflow-y-auto bg-[#050A14]/50 backdrop-blur-sm pt-20">
             <div className="max-w-5xl mx-auto p-12">
               <AnimatePresence mode="wait">
                 <motion.div

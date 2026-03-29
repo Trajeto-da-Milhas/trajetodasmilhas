@@ -34,8 +34,11 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => {
   ];
 
   return (
-    <aside className="w-72 h-screen sticky top-0 bg-[#0D1526] border-r border-white/5 p-6 flex flex-col overflow-y-auto scrollbar-none backdrop-blur-md">
-      <div className="flex-grow">
+    <aside className="w-72 h-full bg-[#0D1526] border-r border-white/5 flex flex-col overflow-y-auto scrollbar-none backdrop-blur-md">
+      {/* Top Space for Header Alignment - Ocupa exatamente a altura do header para alinhar o conteúdo */}
+      <div className="h-20 flex-shrink-0" />
+      
+      <div className="flex-grow p-6 pt-2">
         <h2 className="text-[10px] font-mono text-[#8BA3C0] uppercase tracking-[0.3em] mb-6 opacity-50">SEÇÕES DO SITE</h2>
         <div className="space-y-1.5">
           {tabs.map((tab) => {
@@ -72,7 +75,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => {
         </div>
       </div>
 
-      <div className="mt-8 space-y-4">
+      <div className="p-6 mt-auto space-y-4">
         {/* VSL Studio Button */}
         <button
           onClick={() => navigate('/dev/vsl-studio')}
